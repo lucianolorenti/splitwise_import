@@ -76,8 +76,6 @@ class ImportWidget(QWidget):
     def __init__(self):
         super().__init__()
         self .init_gui()
-    def process(self):
-        pass
     def read_sheet(self, file_data,sheet_name):
         self.model.clear()
         for row in file_data[sheet_name]:
@@ -131,12 +129,12 @@ class ImportWidget(QWidget):
                     expense_user.setPaidShare(str(paid))
                     users.append(expense_user)
                 for expense_user in users:
-                    expense_user.setOwedShare( str(cost*percent - float(expense_user.getPaidShare())))
+                    expense_user.setOwedShare( str(cost*percent))
                 if cost ==0 :
                     raise Exception(self.tr('No se ha introducido monto para el gasto'))
                 expense.setCost(str(cost))
                 expense.setUsers(users)
-                expense.setGroupId(self.current_group.getId())
+                expense.setGroupId(self.current_group.id)
                 self.sObj.createExpense(expense)
                 row = row + 1
                 self.le_initial_row.setText(str(row+1))
